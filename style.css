@@ -1,0 +1,19 @@
+body {background-color: rgb(192, 235, 247);
+font-family: 'Times New Roman', Times, serif;}
+.itens{
+    display: inline;
+    background-color: rgb(192, 252, 232);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 30px;
+}
+#titulo{
+    background-color: black;
+    padding: 30px;
+    border-radius: 10px;
+}
+.menulista{
+    display: flex;
+    justify-content: space-evenly;  
+ }
+ 
