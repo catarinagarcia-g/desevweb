@@ -1,64 +1,53 @@
-document.addEventListener("DOMContentLoaded", ()=>{
-    loadTasks();
-})
-
-function addTask(){
-    let taskInput = document.getElementById("taskInput");
-    let taskText = taskInput.value.trim();
-
-    if (taskText == ""){
-        alert("digite uma tarefa válida");
-        return;
+const taxas = {
+    BRL: { USD: 0.17, EUR: 0.16 },
+    USD: { BRL: 5.88, EUR: 0.88 },
+    EUR: { BRL: 6.25, USD: 1.14 }
+  };
+  
+  let historico = [];
+  
+  function converter() {
+    const valor = parseFloat(document.getElementById("valor").value);
+    const moedaOrigem = document.getElementById("moedaOrigem").value;
+    const moedaDestino = document.getElementById("moedaDestino").value;
+  
+    if (moedaOrigem === moedaDestino) {
+      alert("Selecione moedas diferentes para conversão.");
+      return;
     }
-    let taskList = document.getElementById("taskList");
-    let item = document.createElement("li");
-    item.innerHTML =  `
-    <span onclick="toggleTask(this)">${taskText}</span>
-    <button class = "delete-btn" onclick= "deleteTask(this)">X</button>
-    `
-
-    taskList.appendChild(item);
-    saveTask();
-    taskInput.value = "";
-}
-function toggleTask(element){
-    element.parentElement.classList.toggle("completed");
-}
-
-function deleteTask(button){
-    button.parentElement.remove();
-
-}
-
-function saveTask(){
-    let tasks = [];
-    document.querySelectorAll("#taskList li").forEach((task)=>{
-        tasks.push({
-            task: task.innerText.replace("X", "").trim(),
-            status: task.classList.contains("completed")
-        })
-    })
-    localStorage.setItem("tasks" , JSON.stringify(tasks));
-
-}
-
-function loadTasks(){
-    let tasks = JSON.parse(localStorage.getITem("tasks")) || [];
-
-    let taskLIst = document.getElementById("taskList");
-
-    task.forEAch(element => {
-        let item = document.createElement("li")
-
-        item.innerHTML =  `
-        <span onclick="toggleTask(this)">${taskText}</span>
-        <button class = "delete-btn" onclick= "deleteTask(this)">X</button>
-        `
-
-
-        if(element.status){
-            item.classList.add("completed");   
-        }
-    })
-
-}
+  
+    const taxa = taxas[moedaOrigem][moedaDestino];
+    const valorConvertido = valor * taxa;
+    const data = new Date().toLocaleString();
+  
+    
+    document.getElementById("resultado").innerText = 
+      `Taxa atual: 1 ${moedaOrigem} = ${taxa} ${moedaDestino} \nValor convertido: ${valorConvertido.toFixed(2)} ${moedaDestino}`;
+  
+    
+    const conversao = {
+      data,
+      moedaOrigem,
+      moedaDestino,
+      valor,
+      valorConvertido
+    };
+  
+    
+    historico = [...historico, conversao];
+  
+    
+    atualizarHistorico();
+  }
+  
+  function atualizarHistorico() {
+    const lista = document.getElementById("historico");
+    lista.innerHTML = ""; 
+  
+    historico.forEach(({ data, moedaOrigem, moedaDestino, valor, valorConvertido }) => {
+      const item = document.createElement("li");
+      item.textContent = `${data} - ${valor} ${moedaOrigem} ➜ ${valorConvertido.toFixed(2)} ${moedaDestino}`;
+      lista.appendChild(item);
+    });
+  }
+  

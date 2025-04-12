@@ -1,13 +1,39 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Conversor de Moedas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Conversor de Moedas</h2>
+    
+    <form id="formConversao" onsubmit="event.preventDefault(); converter();">
+      <input type="number" id="valor" placeholder="Digite o valor" required>
+
+      <div class="selects">
+        <select id="moedaOrigem" required>
+          <option value="BRL">Real (BRL)</option>
+          <option value="USD">Dólar (USD)</option>
+          <option value="EUR">Euro (EUR)</option>
+        </select>
+
+        <select id="moedaDestino" required>
+          <option value="USD">Dólar (USD)</option>
+          <option value="BRL">Real (BRL)</option>
+          <option value="EUR">Euro (EUR)</option>
+        </select>
+      </div>
+
+      <button type="submit">Converter</button>
+    </form>
+
+    <div class="resultado" id="resultado"></div>
+    <h3>Histórico de Conversões</h3>
+    <ul id="historico"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>
